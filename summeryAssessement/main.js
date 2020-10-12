@@ -62,27 +62,50 @@ function reduce(array, f, acc) {
 // addID({a : 1}); // {a : 1, id: 'n/n'}
 // addID({c : 2}, 'ABC'); // "Invalid code"
 
-// TODO: your code here
+function addID(object, id ){
+  if(!id)
+    id="n/n";
 
+  else if(!parseInt(id))
+    return "Invalid code";
+
+  object.id = id; 
+  return object;
+
+}
 //=============================================================================
 /*                                  Q2                                    */
 //=============================================================================
 // Write a function called allHaveLastNames that takes an array of names (strings) as input,
 //and returns true if all names in the array have a last name, and false if not.
 //solve it using the most appropriate helper functions(reduce,each,map,filter).
-//var Folks = ["Sierra Heimbach", "Angelica Storms",   "Lampton",  "Hampshire"];
-//var FollkWithLast =  ["Sierra Heimbach", "Angelica Storms", "Doretta Linen"];
+var Folks = ["Sierra Heimbach", "Angelica Storms",   "Lampton",  "Hampshire"];
+var FollkWithLast =  ["Sierra Heimbach", "Angelica Storms", "Doretta Linen"];
 // AllHaveLastNames(Folks); //false
 // AllHaveLastNames(FollkWithLast); //true
 
-// TODO: your code here
+function allHaveLastNames(array){
+  return reduce(array, function( acc, element){
+    if((element.indexOf(" ") !== -1) && (element[element.indexOf(" ")+1] !== undefined))
+      return true;
+    return false ;
+  })
+ 
+
+}
+
 //=============================================================================
 /*                                  Q3                                        */
 //=============================================================================
 // Write a function called coinFlip that randomly returns either "heads" or "tails".
 // Each outcome should have an equal chance of happening.
 //Hint: Math.random()
-// TODO: your code here
+function  coinFlip (){
+  //if it's 1 
+  if(Math.round(Math.random()))
+    return "tails";
+  return "heads";
+}
 
 //=============================================================================
 /*                              Q4                                           */
@@ -106,7 +129,15 @@ function reduce(array, f, acc) {
 // secondArray[1]; // {name: 'Alvaro L. Angelos', id: 11012};
 // secondArray[2]; // {name: 'Denese Dossett', id: 11024};
 
-// TODO: your code here
+function  assignStudnetID(students, start, add){
+  var add1 = add || 1;
+  start = start - add1;
+  return map(students, function(element, i){
+    start+= add1;
+    return{name: element, id : start};;
+  })
+
+}
 
 //=============================================================================
 /*                                  Q5                                         */
@@ -120,7 +151,10 @@ function reduce(array, f, acc) {
 // lastNElements( [5,6,8,9,12], 9 ) ==> [5,6,8,9,12]
 
 function lastNElements(array, n) {
-  // TODO: your code here
+  
+   return filter(array,function(element, i){
+    return i >= (array.length - n);
+   })
 }
 //=============================================================================
 /*                                  Q6                                        */
@@ -130,7 +164,19 @@ function lastNElements(array, n) {
 //replaceDigit("abc1dabc") ==> abc&dabc
 //replaceDigit("p3ython") ==> p&ython
 
-// TODO: your code here
+function  replaceDigit(string){
+  var array = string.split('');
+   for(var i = 0; i < array.length  ; i++ ){
+    if(parseInt(array[i]) ){
+      array[i] = "&"
+      // return array.join("")
+      break;
+    }
+   
+  };
+   return array.join('')
+}
+
 
 //=============================================================================
 /*                                  Q7                                       */
@@ -180,7 +226,32 @@ function arraySum(array){
 //                                   pets : ["Pandacat"]
 
 //  displayProfilePets (myProfile)  ===> Pandacat,SashaGoat
+function makeProfile(name, age, knowsJavascript, pets){
+  return{name: name,
+         age: age,
+         knowsJavascript: knowsJavascript,
+         pets: pets
+        }
+}
 
+function displayProfile(profile){
+  return "name: " + profile.name + "\n" + "age: " + profile.age + "\n" + "knowsJavascript: " + profile.knowsJavascript + "\n" + "pets: [" + profile.pets + "]";
+}
+function displayProfilePets(profile){
+  var display = "";
+  if(profile.pets.length === 0)
+    return display;
+
+  else if(profile.pets.length === 1)
+    return profile.pets[0];
+
+  else if(profile.pets.length > 1){
+    for(var i = 0; i < profile.pets.length - 1 ; i++){
+      display +=  profile.pets[i] + ", ";
+    }
+    return display += profile.pets[profile.pets.length - 1]
+  }
+}
 //=============================================================================
 /*                                  Q9                                     */
 //=============================================================================
@@ -204,9 +275,32 @@ function arraySum(array){
   */
 
 // Now, to make sure that you are actually reading, make a comment below this and type: Yes I am
+// i am !
+function ReadingList(read, unRead, toRead, currentRead, readBooks){
+  var obj = {};
 
-// Write your code here .....
+  obj.read = read;
+  obj.unRead = unRead;
+  obj.toRead = toRead;
+  obj.currentRead = currentRead;
+  obj.readBooks = readBooks;
+  obj.AddBook = AddBook;
+  obj.finishCurrentBook = finishCurrentBook;
 
+  return obj;
+}
+
+var AddBook = function(name){
+  this.toRead.push(name);
+  this.unRead += 1;
+}
+
+var finishCurrentBook = function(){
+  this.readBooks.push(this.currentRead);
+  this.read += 1;
+  this.currentRead = this.toRead[0];
+  this.unRead = this.unRead - 1;
+}
 //=============================================================================
 /*                                  Q10                                      */
 //=============================================================================
@@ -219,13 +313,38 @@ function arraySum(array){
 //return "Can't fit" if you try to add an item that exceeds the storage size limit
 //when the safe is full return a string representing all the items that are in the safe
 //Example:
-//  var safe = makeSafe(5)
+ var safe = makeSafe(5)
 //  safe('watch','small')
 //  safe('gold-bar','big')
 //  safe('silver-bar','big') => "Can't fit"
 //  safe('money','small') => "watch gold-bar money"
 
-// Write your code here .....
+function makeSafe (limit){
+  var safe = '';
+  function addItem(item, itemSize){
+
+    if(itemSize === 'small' && (limit - 1 >= 0)){
+      safe += " " + item;
+      limit = limit - 1
+    }
+    else if(itemSize === 'medium' && (limit - 2 >= 0)){
+      safe += " " + item;
+      limit = limit - 2
+    }
+    else if(itemSize === 'big' && (limit - 3 >= 0)){
+      safe += " " + item;
+      limit = limit - 3
+    }
+    else {return "can't fit" }
+
+    if (limit == 0)
+      return safe;
+
+    
+
+  }
+  return addItem;
+}
 
 //=============================================================================
 /*                                  Q11                                        */
@@ -273,11 +392,24 @@ function arraySum(array){
 //================================================================================
 // Theoretical questions.
 // 1- In your own words,Why do we use Closures ?
+//  ---- > we use Closures to enable data privacy : the variables declares inside the outer function are only accessible by the inner functions which helps us protect our data
 
 // 2- In OOP, what does "this" refer to ?
+//---> Inside a function, the keyword this refers to the object that was to the left of the dot where that function was called.
 
 // 3- What is jQuery?
+//----> jQuery is a lightweight, "write less, do more", JavaScript library.
+
 // 4- what is the diffrence between Closure's methods and The OOP's methods?
+//---->closure is declaring function inside your outer function to preserve data privacy
+ //--> oop saves memory by defining  the function inside variables  outside of the class and refering to them inside the object of the class (as methods) using the name of the variables
+
 // 5- What are variables?
+//----> variables are spots in memory to store data which value can be changed 
+
 // 6- 5-What  is the difference between == and === ?
+//-----> == compares between two values / variables regardless of their type (does not compare their type) 
+//----> === compares between two values / variables while considering of their type ( compare their type) 
+
 //7- What’s the Higher-Order Function ?
+//-----> A Higher-Order Function is a function that accepts a function as parameter and / or return a function 

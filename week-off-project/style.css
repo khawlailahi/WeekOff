@@ -1,3 +1,12 @@
+  /*#page1{
+  	display: none;
+  }*/
+  
+ #dress{
+ 	margin: 0 auto;
+ 	text-align: center;
+ 	/*display: none;*/
+ } 
    #moto{
    	background-image: url("images/bg.jpg");
    	font-family: 'Pacifico', cursive;

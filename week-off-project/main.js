@@ -3,3 +3,7 @@ $("#menu-toggle").click(function(e) {
       $("#wrapper").toggleClass("toggled");
     });
 
+// $("#dress-list").click(function() {
+//       console.log("hi")
+//       $("#dress").show();
+//     });
