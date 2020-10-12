@@ -140,7 +140,20 @@ function lastNElements(array, n) {
 // arraySum([1, 2, 3, 4, 5, 6]) ==> 15
 // arraySum([1, 2, 4]) ==>   3
 
-// TODO: your code here
+function arraySum(array){
+	var i = 0;
+	var sum = 0;
+	function summ(){
+		if(i === array.length-1)
+			return 0
+		sum+= array[i]
+        i++;
+		summ();
+        
+        return sum;
+	}
+	return summ();
+}
 
 //=============================================================================
 /*                                  Q8                                   */
