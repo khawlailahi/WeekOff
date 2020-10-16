@@ -1,0 +1,1 @@
+$("#cart").append(localStorage.getItem("product"))

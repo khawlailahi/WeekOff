@@ -1,9 +1,16 @@
-$("#menu-toggle").click(function(e) {
-      e.preventDefault();
+$("#menu-toggle").click(function() {
       $("#wrapper").toggleClass("toggled");
     });
+var cart=$('.active-wear')
 
-// $("#dress-list").click(function() {
-//       console.log("hi")
-//       $("#dress").show();
-//     });
+ var button=document.getElementsByTagName('button')
+ for(butt of button){
+ 	butt.addEventListener("click", (e)=>{
+		var parent = e.target.parentNode;
+		console.log(parent)
+		
+		localStorage.setItem("product",parent.outerHTML)
+		
+ 	});
+ }
+ 

@@ -1,12 +1,38 @@
   /*#page1{
   	display: none;
   }*/
-  
- #dress{
+  .name{
+   color: white;
+   font-weight: bold;
+   text-align: center;
+   background: lightpink;
+    
+  }
+  .des{
+        font-family: 'Pacifico', cursive;
+         font-size: 30px; 
+         
+  }
+ 
+  #looks{
+   
+    background-repeat: no-repeat;
+    background-size: 100%;
+
+  }
+  #cart h4{
+    background: gray;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+
+
+  }
+ /*#dress{
  	margin: 0 auto;
  	text-align: center;
- 	/*display: none;*/
- } 
+ 
+ } */
    #moto{
    	background-image: url("images/bg.jpg");
    	font-family: 'Pacifico', cursive;
